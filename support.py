@@ -9,7 +9,7 @@ import json
 
 # Use this function for SQLITE3
 def connect_db():
-    conn = sqlite3.connect("expense.db")
+    conn = sqlite3.connect(os.getcwd() + "/expense.db")
     cur = conn.cursor()
     cur.execute(
         '''CREATE TABLE IF NOT EXISTS user_login (user_id INTEGER PRIMARY KEY AUTOINCREMENT, username VARCHAR(30) NOT NULL, 
