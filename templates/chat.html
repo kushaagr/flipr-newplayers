@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Expense Tracker - Chat</title>
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static',filename='css/style.css') }}">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.3.1/dist/css/bootstrap.min.css">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/chat.css') }}">
+</head>
+<body class="page-bg">
+    <!-- Replace the entire existing navbar div with this -->
+    <nav class="navbar navbar-expand-md bg-light"> <!-- bg-light for white background -->
+        <a class="navbar-brand text-dark" href="/">Expense Tracker - {{ user_name }}</a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#mainNavbar" aria-controls="mainNavbar" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="mainNavbar">
+            <!-- Use mx-auto to center the links and adjust gap -->
+            <ul class="navbar-nav mx-auto mb-2 mb-md-0 d-flex align-items-center" style="gap: 1.2rem;">
+                <li class="nav-item">
+                    <a class="nav-link text-dark" href="/home">Home</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link text-dark" href="/analysis">Analysis</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link text-dark" href="/profile">Profile</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link d-flex align-items-center {% if request.endpoint == 'chat' %}active text-primary fw-bold{% else %}text-dark{% endif %}" href="/chat">
+                        <span class="me-1">SaraswatiAi</span>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link text-dark" href="/ai_assistance">AI Assistance</a>
+                </li>
+            </ul>
+            <!-- Logout button at the end -->
+            <ul class="navbar-nav d-flex align-items-center">
+                <li class="nav-item">
+                    <!-- Use inline style to change the button's appearance -->
+                    <a class="btn btn-outline-danger ms-2" style="background-color: black; color: rgb(226, 73, 53);" href="/logout">Logout</a>
+                </li>
+            </ul>
+        </div>
+    </nav>
+
+    <div class="container">
+        <h1 style="color: white;">Chat with SaraswatiAI</h1>
+        <!--  Expense Summary -->
+        <!-- <div class="card">
+            <div class="card-body">
+                <h5 class="card-title">Expense Summary</h5>
+                <p class="card-text">{{ expense_summary }}</p>
+            </div>
+        </div> -->
+
+        <div id="chat-area">
+            <!-- Chat messages will be displayed here -->
+        </div>
+
+        <div class="input-group mb-3">
+            <input type="text" class="form-control" id="user-message" placeholder="Enter your message">
+            <div class="input-group-append">
+                <button class="btn btn-primary" type="button" id="send-button">Send</button>
+            </div>
+        </div>
+
+        <!-- Gamification Elements (Example) -->
+        <!-- <div class="gamification">
+            <span class="badge">Level 1</span>
+            <div class="progress">
+                <div class="progress-bar" role="progressbar" style="width: 25%" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100"></div>
+            </div>
+        </div> -->
+    </div>
+
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.14.7/dist/umd/popper.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.3.1/dist/js/bootstrap.min.js"></script>
+    <script src="{{ url_for('static', filename='js/chat.js') }}"></script>
+</body>
+</html>

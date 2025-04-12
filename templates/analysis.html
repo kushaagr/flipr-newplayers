@@ -1,0 +1,220 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static',filename='css/style.css') }}">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/habibmhamadi/multi-select-tag/dist/css/multi-select-tag.css">
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.3.1/dist/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <title>Expense Tracker - Analysis</title>
+</head>
+<body class="body">
+    <!-- Replace the entire existing navbar div with this -->
+    <nav class="navbar navbar-expand-md bg-light"> <!-- bg-light for white background -->
+        <a class="navbar-brand text-dark" href="/">Expense Tracker - {{ user_name }}</a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#mainNavbar" aria-controls="mainNavbar" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="mainNavbar">
+            <!-- Use mx-auto to center the links and adjust gap -->
+            <ul class="navbar-nav mx-auto mb-2 mb-md-0 d-flex align-items-center" style="gap: 1.2rem;">
+                <li class="nav-item">
+                    <a class="nav-link text-dark" href="/home">Home</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link text-dark" href="/analysis">Analysis</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link text-dark" href="/profile">Profile</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link d-flex align-items-center {% if request.endpoint == 'chat' %}active text-primary fw-bold{% else %}text-dark{% endif %}" href="/chat">
+                        <span class="me-1">SaraswatiAi</span>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link text-dark" href="/ai_assistance">AI Assistance</a>
+                </li>
+            </ul>
+            <!-- Logout button at the end -->
+            <ul class="navbar-nav d-flex align-items-center">
+                <li class="nav-item">
+                    <!-- Use inline style to change the button's appearance -->
+                    <a class="btn btn-outline-danger ms-2" style="background-color: black; color: red;" href="/logout">Logout</a>
+                </li>
+            </ul>
+        </div>
+    </nav>
+
+ <div class="container">
+     <div class="row my-3">
+         <div class="col">
+
+            <!-- Analysis Overview -->
+            <hr>
+            <div class="analysis-overview">
+                <h3>Analysis Overview</h3>
+                <p class="darker-font" style="color: #EEEEEE;">This page provides a comprehensive overview of your spending habits. Each visualization is designed to highlight different aspects of your financial activity, allowing you to identify trends, patterns, and areas for improvement.</p>
+            </div>
+
+            <!-- Category: Expense Distribution -->
+            <hr>
+            <h3>Expense Distribution</h3>
+            <div class="row">
+                <!-- Expense Category Breakdown -->
+                <div class="col-md-8 visualization-area">
+                     <div class="goal-panel m-2">
+                         <div id="pie" class="chart"></div>
+                     </div>
+                 </div>
+
+                 <!-- Description for Expense Category Breakdown -->
+                 <div class="col-md-4 description-area">
+                     <h5 style="color: #000000;">Expense Category Breakdown</h5>
+                     <small style="font-size: 1.1rem; color: #FFFFFF; text-decoration: underline;">Percentage distribution of expenses across categories.</small>
+                     <p class="darker-font" style="color: #EEEEEE;">This chart shows how your expenses are divided among different categories (e.g., Spend, Earning, Investment, Saving).</p>
+                 </div>
+            </div>
+
+            <div class="row">
+                <!-- Spending by Category -->
+                <div class="col-md-8 visualization-area">
+                     <div class="goal-panel m-2">
+                         <div id="stack_bar" class="chart"></div>
+                     </div>
+                 </div>
+
+                 <!-- Description for Spending by Category -->
+                 <div class="col-md-4 description-area">
+                     <h5 style="color: #000000;">Spending by Category</h5>
+                     <small style="font-size: 1.1rem; color: #FFFFFF; text-decoration: underline;">Amount spent for each category.</small>
+                     <p class="darker-font" style="color: #EEEEEE;">This chart displays the total amount spent in each expense category. It helps you identify which specific areas consume the most of your funds.</p>
+                 </div>
+            </div>
+
+            <!-- Category: Time-Based Analysis -->
+            <hr>
+            <h3>Time-Based Analysis</h3>
+            <div class="row">
+                <!-- Expense Trend Over Time -->
+                 <div class="col-md-8 visualization-area">
+                     <div class="goal-panel m-2">
+                         <div id="line" class="chart"></div>
+                     </div>
+                 </div>
+
+                 <!-- Description for Expense Trend Over Time -->
+                 <div class="col-md-4 description-area">
+                     <h5 style="color: #000000;">Expense Trend Over Time</h5>
+                     <small style="font-size: 1.1rem; color: #FFFFFF; text-decoration: underline;">How expenses change over time.</small>
+                     <p class="darker-font" style="color: #EEEEEE;">This chart visualizes the trend of your expenses over time. Rising trends indicate increasing expenses, while declining trends suggest reduced spending.</p>
+                 </div>
+            </div>
+
+            <div class="row">
+                <!-- Monthly Spending Summary -->
+                <div class="col-md-8 visualization-area">
+                     <div class="goal-panel m-2">
+                         <div id="month_bar" class="chart"></div>
+                     </div>
+                 </div>
+
+                 <!-- Description for Monthly Spending Summary -->
+                 <div class="col-md-4 description-area">
+                     <h5 style="color: #000000;">Monthly Spending Summary</h5>
+                     <small style="font-size: 1.1rem; color: #FFFFFF; text-decoration: underline;">Total expenses for each month.</small>
+                     <p class="darker-font" style="color: #EEEEEE;">This chart summarizes your total expenses for each month, allowing you to compare spending patterns across different months.</p>
+                 </div>
+            </div>
+
+            <!-- Category: Detailed Breakdown -->
+            <hr>
+            <h3>Detailed Breakdown</h3>
+            <div class="row">
+                <!-- Detailed Expense Allocation -->
+                <div class="col-md-8 visualization-area">
+                     <div class="goal-panel m-2">
+                         <div id="sun" class="chart"></div>
+                     </div>
+                 </div>
+
+                 <!-- Description for Detailed Expense Allocation -->
+                 <div class="col-md-4 description-area">
+                     <h5 style="color: #000000;">Detailed Expense Allocation</h5>
+                     <small style="font-size: 1.1rem; color: #FFFFFF; text-decoration: underline;">Hierarchical breakdown of expenses.</small>
+                     <p class="darker-font" style="color: #EEEEEE;">This chart provides a detailed, hierarchical view of your expenses, breaking them down into categories and subcategories.</p>
+                 </div>
+            </div>
+
+            <div class="row">
+                <!-- Transaction Count Heatmap -->
+                <div class="col-md-8 visualization-area">
+                     <div class="goal-panel m-2">
+                         <div id="heat" class="chart"></div>
+                     </div>
+                 </div>
+
+                 <!-- Description for Transaction Count Heatmap -->
+                 <div class="col-md-4 description-area">
+                     <h5 style="color: #000000;">Transaction Count Heatmap</h5>
+                     <small style="font-size: 1.1rem; color: #FFFFFF; text-decoration: underline;">Transaction count for each day over the month.</small>                     <p class="darker-font" style="color: #EEEEEE;">This chart shows the distribution of your transactions over days and months. It helps identify patterns in your spending habits.</p>
+                 </div>
+            </div>
+
+            <!-- Category: Other -->
+            <hr>
+            <h3>Other</h3>
+            <div class="row">
+                <!-- Spending Over Time -->
+                 <div class="col-md-8 visualization-area">
+                     <div class="goal-panel text-center m-2">
+                         <div id="scatter" class="chart"></div>
+                     </div>
+                 </div>
+
+                 <!-- Description for Spending Over Time -->
+                 <div class="col-md-4 description-area">
+                     <h5 style="color: #000000;">Spending Over Time</h5>
+                     <small style="font-size: 1.1rem; color: #FFFFFF; text-decoration: underline;">This chart shows the relation of amount over time</small>
+                     <p class="darker-font" style="color: #EEEEEE;">This chart shows the relation of amount over time.</p>
+                 </div>
+            </div>
+         </div>
+     </div>
+ </div>
+
+
+<!-- Optional JavaScript -->
+<!-- jQuery first, then Popper.js, then Bootstrap JS -->
+<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/popper.js@1.14.7/dist/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@4.3.1/dist/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+ <script src='https://cdn.plot.ly/plotly-2.16.1.min.js'></script>
+ <script src='https://cdn.plot.ly/plotly-latest.min.js'></script> <!-- Plotly CDN -->
+ <script src="{{ url_for('static', filename='js/script.js') }}"></script> <!-- Local JS -->
+ <script src='https://cdn.plot.ly/plotly-latest.min.js'></script>
+ <script src="https://cdn.jsdelivr.net/gh/habibmhamadi/multi-select-tag/dist/js/multi-select-tag.js"></script>
+</body>
+<script type='text/javascript'>
+  var bar = {{bar | safe}};
+  var pie = {{pie | safe}};
+  var line_graph = {{line | safe}};
+  var scatter_graph = {{scatter | safe}};
+  var heat_graph = {{heat | safe}};
+  var month_graph = {{month_bar | safe}};
+  var sun_graph = {{sun | safe}};
+
+<!--Plotly.plot('div_id',data,{});-->
+  Plotly.plot('pie',pie,{});
+  Plotly.plot('stack_bar',bar,{});
+  Plotly.plot('line',line_graph,{});
+  Plotly.plot('scatter',scatter_graph,{});
+  Plotly.plot('heat',heat_graph,{});
+  Plotly.plot('month_bar',month_graph,{});
+  Plotly.plot('sun',sun_graph,{});
+
+</script>
+</html>
